@@ -5,6 +5,7 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
 import com.microsoft.playwright.assertions.PlaywrightAssertions;
+import com.microsoft.playwright.options.LoadState;
 import org.junit.jupiter.api.Test;
 
 public class EpamTest {
@@ -20,7 +21,7 @@ public class EpamTest {
       Page page = context.newPage();
 
       page.navigate("https://www.epam.com/");
-      page.waitForLoadState(Page.LoadState.NETWORKIDLE);
+      page.waitForLoadState(LoadState.NETWORKIDLE);
 
       page.locator("header").getByText("Services", new Locator.GetByTextOptions().setExact(true)).click();
       page.getByText("Explore Our Client Work", new Page.GetByTextOptions().setExact(true)).click();
