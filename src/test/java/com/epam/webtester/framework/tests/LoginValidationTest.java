@@ -41,12 +41,17 @@ public class LoginValidationTest extends BaseTest {
     void loginValidationScenariosShouldShowExpectedMessage(LoginScenario scenario) {
         LoginPage loginPage = new LoginPage(page).navigateTo(BASE_URL);
 
-        loginPage.enterUsername(scenario.username())
-                .enterPassword(scenario.password())
-                .clickLogin();
+        try {
+            loginPage.enterUsername(scenario.username())
+                    .enterPassword(scenario.password())
+                    .clickLogin();
 
-        String actualError = loginPage.getErrorMessage().toLowerCase();
-        Assertions.assertTrue(actualError.contains(scenario.expectedErrorFragment()),
-                "Expected error containing '" + scenario.expectedErrorFragment() + "' but got: " + actualError);
+            String actualError = loginPage.getErrorMessage().toLowerCase();
+            Assertions.assertTrue(actualError.contains(scenario.expectedErrorFragment()),
+                    "Expected error containing '" + scenario.expectedErrorFragment() + "' but got: " + actualError);
+        } catch (AssertionError | RuntimeException ex) {
+            captureScreenshot("ASSERTION_FAILURE");
+            throw ex;
+        }
     }
 }
