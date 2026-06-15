@@ -1,6 +1,7 @@
 package com.epam.webtester.framework.pages;
 
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.options.WaitForSelectorState;
 import com.microsoft.playwright.options.WaitUntilState;
 
 public class LoginPage {
@@ -18,6 +19,7 @@ public class LoginPage {
 
     public LoginPage navigateTo(String url) {
         page.navigate(url, new Page.NavigateOptions().setWaitUntil(WaitUntilState.DOMCONTENTLOADED));
+        page.locator(loginButton).waitFor(new Page.Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         return this;
     }
 
@@ -37,6 +39,7 @@ public class LoginPage {
     }
 
     public String getErrorMessage() {
+        page.locator(errorMessage).waitFor(new Page.Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
         return page.locator(errorMessage).textContent();
     }
 
