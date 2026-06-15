@@ -33,7 +33,18 @@ public class LoginPage {
         return this;
     }
 
-    public InventoryPage clickLogin() {
+    public LoginPage login(String username, String password) {
+        return enterUsername(username)
+                .enterPassword(password)
+                .clickLogin();
+    }
+
+    public LoginPage clickLogin() {
+        page.locator(loginButton).click();
+        return this;
+    }
+
+    public InventoryPage submitLogin() {
         page.locator(loginButton).click();
         return new InventoryPage(page);
     }
