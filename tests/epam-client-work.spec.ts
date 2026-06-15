@@ -1,5 +1,4 @@
 import { test, expect } from '@playwright/test';
-// Updated: EPAM Client Work Navigation Test
 
 test.describe('EPAM website - Client Work navigation', () => {
   test('Navigate to Client Work from Services', async ({ page }, testInfo) => {
