@@ -1,0 +1,20 @@
+{
+  "name": "epam-web-tester-mcp",
+  "version": "1.0.0",
+  "description": "Automated Playwright tests for SauceDemo application",
+  "scripts": {
+    "test": "playwright test",
+    "test:login": "playwright test tests/saucedemo-login.spec.ts",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:headed": "playwright test --headed",
+    "test:ci": "playwright test --reporter=github",
+    "report": "playwright show-report test-results/html-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}
