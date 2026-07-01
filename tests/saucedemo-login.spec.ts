@@ -40,3 +40,34 @@ async function fillLoginForm(
 async function clickLoginButton(page: Page): Promise<void> {
   await page.locator('#login-button').click();
 }
+
+// ─────────────────────────────────────────────
+//  AC1 – Successful Login
+// ─────────────────────────────────────────────
+test.describe('AC1: Successful Login', () => {
+  test('should redirect standard_user to the Inventory page after valid login', async ({ page }) => {
+    await gotoLoginPage(page);
+
+    // AC5 – UI assertions before interaction
+    await expect(page.locator('#user-name')).toBeVisible();
+    await expect(page.locator('#user-name')).toBeEditable();
+    await expect(page.locator('#password')).toBeVisible();
+    await expect(page.locator('#password')).toHaveAttribute('type', 'password'); // password masked
+    await expect(page.locator('#login-button')).toBeEnabled();
+
+    await captureScreenshot(page, 'ac1-login-page-before');
+
+    await fillLoginForm(page, 'standard_user', VALID_PASSWORD);
+    await clickLoginButton(page);
+
+    // Assert URL change after successful login
+    await page.waitForURL(INVENTORY_URL, { timeout: 10_000 });
+    await expect(page).toHaveURL(INVENTORY_URL);
+
+    // Assert inventory page loaded
+    await expect(page.locator('.inventory_list')).toBeVisible();
+    await expect(page.locator('.title')).toHaveText('Products');
+
+    await captureScreenshot(page, 'ac1-inventory-page-after-login');
+  });
+});
